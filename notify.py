@@ -11,12 +11,18 @@ import os
 import time
 import sys
 
+# === 修正后的青龙通知模块导入逻辑 ===
+sys.path.append('/ql/scripts')
 try:
-    from notify import send
+    from sendNotify import send
 except ImportError:
-    print("未找到 notify.py，将仅在控制台输出日志。")
-    def send(title, content):
-        pass
+    try:
+        from notify import send
+    except ImportError:
+        print("未找到任何标准的青龙通知模块（sendNotify.py / notify.py），将仅在控制台输出日志。")
+        def send(title, content):
+            pass
+# ==================================
 
 def get_headers(cookie):
     return {
